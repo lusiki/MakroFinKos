@@ -1,0 +1,140 @@
+---
+title: "MakroFin Pregled"
+author: "Lux"
+date: '2022-08-20'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+
+## MAKROEKONOMSKI PREGLED
+
+
+
+
+<details>
+  <summary>Inflacija</summary>
+
+
+<iframe src="https://d3fy651gv2fhd3.cloudfront.net/embed/?s=cpi+yoy&amp;v=202208101310V20220312&amp;d1=19220914&amp;h=300&amp;w=600" height="300" width="600" frameborder="0" scrolling="no"></iframe>
+
+
+</details>
+
+
+<details>
+ <summary>Kamatne stope CB</summary>
+  
+
+<iframe src='https://d3fy651gv2fhd3.cloudfront.net/embed/?s=fdtr&v=202208171830V20220312&d1=19220914&h=300&w=600' height='300' width='600'  frameborder='0' scrolling='no'></iframe>
+
+
+</details>
+
+
+<details>
+ <summary>BDP dugoročno (razine)</summary>
+
+
+<iframe src='https://d3fy651gv2fhd3.cloudfront.net/embed/?s=wgdpus&projection=te&v=202207111304V20220312&d1=19220914&h=300&w=600' height='300' width='600'  frameborder='0' scrolling='no'></iframe>
+
+
+</details>
+
+
+<details>
+ <summary>BDP dugoročno (stope promjene)</summary>
+
+
+
+<iframe src='https://d3fy651gv2fhd3.cloudfront.net/embed/?s=gdp+cqoq&v=202207281330V20220312&d1=19220914&h=300&w=600' height='300' width='600'  frameborder='0' scrolling='no'></iframe>
+
+
+</details>
+
+
+<details>
+ <summary>BDP dugoročno (recesije)</summary>
+
+
+<iframe src='https://d3fy651gv2fhd3.cloudfront.net/embed/?s=usafygg&v=202201271524V20220312&d1=19970826&h=300&w=600' height='300' width='600'  frameborder='0' scrolling='no'></iframe>
+
+</details>
+
+<details>
+ <summary>BDP kratkoročno</summary>
+
+
+<iframe src='https://d3fy651gv2fhd3.cloudfront.net/embed/?s=gdp+cqoq&v=202207281330V20220312&d1=20190821&h=300&w=600' height='300' width='600'  frameborder='0' scrolling='no'></iframe>
+
+</details>
+
+
+<details>
+ <summary>Nezaposlenost</summary>
+
+
+<iframe src='https://d3fy651gv2fhd3.cloudfront.net/embed/?s=usurtot&v=202208051244V20220312&d1=19220914&h=300&w=600' height='300' width='600'  frameborder='0' scrolling='no'></iframe>
+
+</details>
+
+## FINANCIJSKA TRŽIŠTA
+
+
+<details>
+ <summary>Dionice (povijesno)</summary>
+
+```{r , echo=FALSE, fig.cap="A caption", out.width = '100%'}
+knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/stocksLT.png")
+```
+
+</details>
+
+
+
+<details>
+ <summary>Dionice (25y)</summary>
+
+
+```{r , echo=FALSE, fig.cap="A caption", out.width = '100%'}
+knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/stocks25y.png")
+```
+
+</details>
+
+
+<details>
+ <summary>Dionice (5y)</summary>
+
+
+```{r , echo=FALSE, fig.cap="A caption", out.width = '100%'}
+knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/stocks5y.png")
+```
+
+</details>
+
+<details>
+ <summary>Dionice (1y)</summary>
+
+
+```{r , echo=FALSE, fig.cap="A caption", out.width = '100%'}
+knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/stocks1y.png")
+```
+
+</details>
+
+<details>
+ <summary>Nafta (1y)</summary>
+
+
+```{r , echo=FALSE, fig.cap="A caption", out.width = '100%'}
+knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/oil.png")
+```
+
+</details>
+
