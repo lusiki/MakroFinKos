@@ -138,3 +138,36 @@ knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/oil.png")
 
 </details>
 
+
+<details>
+ <summary>Obveznice (10y;dugi rok) </summary>
+
+
+```{r , echo=FALSE,  out.width = '100%'}
+knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/bonds10.png")
+```
+
+</details>
+
+
+
+<details>
+ <summary>Obveznice (10y;srednji rok) </summary>
+
+
+```{r , echo=FALSE,  out.width = '100%'}
+knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/bonds10st.png")
+```
+
+</details>
+
+
+<details>
+ <summary>Obveznice (1y;srednji rok) </summary>
+
+
+```{r , echo=FALSE,  out.width = '100%'}
+knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/bonds1.png")
+```
+
+</details>
