@@ -297,3 +297,23 @@ knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/Inkedspzarad
 
 </details>
 
+
+
+</details>
+
+<details>
+ <summary>Income + </summary>
+
+
+```{r , echo=FALSE,  out.width = '100%'}
+knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/Inkedincomeplus.jpg")
+```
+
+</details>
+
+
+
+
+
+
+
