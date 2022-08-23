@@ -27,6 +27,17 @@ knitr::opts_chunk$set(echo = TRUE)
 </details>
 
 
+
+<details>
+ <summary>Inflacija globalno</summary>
+
+
+```{r , echo=FALSE, fig.cap="A caption", out.width = '100%'}
+knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/Inkedinflacijainternacional.jpg")
+```
+
+</details>
+
 <details>
  <summary>Kamatne stope CB</summary>
   
@@ -182,6 +193,19 @@ knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/bonds1.png")
 ```
 
 </details>
+
+
+<details>
+ <summary>Obveznice inverzija </summary>
+
+
+```{r , echo=FALSE,  out.width = '100%'}
+knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/Inkedyield inversion.jpg")
+```
+
+</details>
+
+
 
 
 
