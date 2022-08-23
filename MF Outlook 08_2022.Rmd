@@ -171,3 +171,62 @@ knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/bonds1.png")
 ```
 
 </details>
+
+
+
+<details>
+ <summary>Bond spread</summary>
+
+
+```{r , echo=FALSE,  out.width = '100%'}
+knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/bondspread.png")
+```
+
+</details>
+
+
+
+<details>
+ <summary>TLT20</summary>
+
+
+```{r , echo=FALSE,  out.width = '100%'}
+knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/TLT20.png")
+```
+
+</details>
+
+
+<details>
+ <summary>Crypto </summary>
+
+
+```{r , echo=FALSE,  out.width = '100%'}
+knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/BTC.png")
+```
+
+</details>
+
+
+<details>
+ <summary>Crypto </summary>
+
+
+```{r , echo=FALSE,  out.width = '100%'}
+knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/NASDAQ.png")
+```
+
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
