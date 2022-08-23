@@ -83,6 +83,17 @@ knitr::opts_chunk$set(echo = TRUE)
 
 </details>
 
+
+<details>
+ <summary>Nezaposlenost (+recesije)</summary>
+
+
+```{r , echo=FALSE, fig.cap="A caption", out.width = '100%'}
+knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/nezaposlenost1.png")
+```
+
+</details>
+
 ## FINANCIJSKA TRŽIŠTA
 
 
@@ -219,10 +230,26 @@ knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/NASDAQ.png")
 </details>
 
 
+<details>
+ <summary>Fondovi (energija + obvezince) </summary>
 
 
+```{r , echo=FALSE,  out.width = '100%'}
+knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/Inkedfondovi.jpg")
+```
+
+</details>
 
 
+<details>
+ <summary>FED i tržišta </summary>
+
+
+```{r , echo=FALSE,  out.width = '100%'}
+knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/InkedFED.jpg")
+```
+
+</details>
 
 
 
