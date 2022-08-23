@@ -253,7 +253,23 @@ knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/InkedFED.jpg
 
 
 
+<details>
+ <summary>Duljina pada na dioničkom tržištu </summary>
 
 
+```{r , echo=FALSE,  out.width = '100%'}
+knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/Inkedstockrecesije.jpg")
+```
 
+</details>
+
+<details>
+ <summary>SP500 zarade </summary>
+
+
+```{r , echo=FALSE,  out.width = '100%'}
+knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/Inkedspzarade.jpg")
+```
+
+</details>
 
