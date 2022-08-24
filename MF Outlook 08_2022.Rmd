@@ -5,7 +5,7 @@ date: '2022-08-20'
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -15,13 +15,96 @@ knitr::opts_chunk$set(echo = TRUE)
 ## MAKROEKONOMSKI PREGLED
 
 
-
-
 <details>
   <summary>Inflacija</summary>
 
 
-<iframe src="https://d3fy651gv2fhd3.cloudfront.net/embed/?s=cpi+yoy&amp;v=202208101310V20220312&amp;d1=19220914&amp;h=300&amp;w=600" height="300" width="600" frameborder="0" scrolling="no"></iframe>
+```{r,fig.width=12, echo=FALSE, warning=FALSE, message=FALSE}
+library(WDI)
+library(ggplot2)
+library(tidyverse)
+
+dat = WDI(indicator='FP.CPI.TOTL.ZG',
+          country=c('FR','GB','US','DE','IT','ES'),
+          start=1960, end=2021)
+
+
+
+ggplot(dat, aes(year, FP.CPI.TOTL.ZG, color=country)) +
+  geom_line() + 
+  xlab('Year') +
+  ylab('CPI %')
+
+```
+
+```{r eval=FALSE, echo=FALSE , warning=FALSE, message=FALSE}
+
+# see package tutorial at:
+# https://github.com/mingjerli/IMFData
+# also: https://meshry.com/blog/downloading-data-from-the-imf-api-using-r/
+
+library(IMFData)
+ 
+
+# search for data
+availableDB <- DataflowMethod()
+availableDB$DatabaseID[127]
+grep("Price",availableDB$DatabaseText)
+availableDB$DatabaseText[127]
+CPI.available.codes <- DataStructureMethod("CPI")
+CodeSearch(CPI.available.codes, "CL_INDICATOR_CPI", "CPI")
+
+
+names(CPI.available.codes)
+CPI.available.codes[[3]]
+
+
+# API call
+
+databaseID <- "CPI"
+startdate = "2001-01-01"
+enddate = "2022-12-31"
+checkquery = FALSE
+
+## Germany, Norminal GDP in Euros, Norminal GDP in National Currency
+queryfilter <- list(CL_FREQ = "",
+                    CL_AREA_CPI = "", #  c("US","DE","FR" )
+                    CL_INDICATOR_CPI = "PCPIHA_PC_CP_A_PT") # PCPI_IX PCPIHA_PC_CP_A_PT
+CPI.query <- CompactDataMethod(databaseID,
+                               queryfilter,
+                               startdate, enddate,
+                               checkquery)
+CPI.query[, 1:5]
+
+
+CPI.query$Obs[[4]]
+
+
+```
+
+```{r,echo=FALSE,  fig.width=12,warning=FALSE, message=FALSE}
+# from DBNomics
+
+library(rdbnomics)
+
+
+df <- rdb(ids = c('IMF/CPI/M.US.PCPI_PC_CP_A_PT',
+                  'IMF/CPI/M.DE.PCPI_PC_CP_A_PT',
+                  'IMF/CPI/M.GB.PCPI_PC_CP_A_PT',
+                  'IMF/CPI/M.FR.PCPI_PC_CP_A_PT')) %>%
+  filter(!is.na(value))
+
+
+ggplot(df, aes(x = period, y = value, color = REF_AREA)) +
+  geom_line(size = 0.5) 
+
+
+```
+
+
+
+
+
 
 
 </details>
