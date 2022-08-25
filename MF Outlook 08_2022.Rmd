@@ -48,11 +48,11 @@ library(IMFData)
 
 # search for data
 availableDB <- DataflowMethod()
-availableDB$DatabaseID[127]
-grep("Price",availableDB$DatabaseText)
-availableDB$DatabaseText[127]
-CPI.available.codes <- DataStructureMethod("CPI")
-CodeSearch(CPI.available.codes, "CL_INDICATOR_CPI", "CPI")
+availableDB$DatabaseID#[127]
+grep("rate",availableDB$DatabaseText)
+availableDB$DatabaseText[grep(" Monetary and Financial Statistics",availableDB$DatabaseText)]
+CPI.available.codes <- DataStructureMethod("MFS")
+CodeSearch(CPI.available.codes, "CL_INDICATOR_CPI", "")
 
 
 names(CPI.available.codes)
@@ -84,7 +84,7 @@ CPI.query$Obs[[4]]
 
 ```{r,echo=FALSE,  fig.width=12,warning=FALSE, message=FALSE}
 # from DBNomics
-
+# check tutorial: https://macro.cepremap.fr/article/2020-10/rdbnomics-tutorial/
 library(rdbnomics)
 
 
@@ -102,30 +102,50 @@ ggplot(df, aes(x = period, y = value, color = REF_AREA)) +
 ```
 
 
-
-
-
-
-
 </details>
 
-
-
-<details>
- <summary>Inflacija globalno</summary>
-
-
-```{r , echo=FALSE, fig.cap="A caption", out.width = '100%'}
-knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/Inkedinflacijainternacional.jpg")
-```
-
-</details>
 
 <details>
  <summary>Kamatne stope CB</summary>
   
 
-<iframe src='https://d3fy651gv2fhd3.cloudfront.net/embed/?s=fdtr&v=202208171830V20220312&d1=19220914&h=300&w=600' height='300' width='600'  frameborder='0' scrolling='no'></iframe>
+
+
+```{r, fig.width=10, echo=FALSE}
+# Monetary and Financial Statistics (MFS) [MFS]
+
+# https://db.nomics.world/IMF/MFS?dimensions=%7B%22INDICATOR%22%3A%5B%22FPOLM_PA%22%5D%2C%22REF_AREA%22%3A%5B%22US%22%2C%22U2%22%5D%7D&q=+Monetary+and+Financial+Statistics+
+
+
+# df <- rdb(ids = c('IMF/MFS/M.US.FPOLM_PA',
+#                   'IMF/MFS/M.U2.FPOLM_PA',
+#                  # 'IMF/MFS/M.DE.FPOLM_PA',
+#                   'IMF/MFS/M.GB.FPOLM_PA')) %>%
+#   filter(!is.na(value))
+# 
+# 
+# ggplot(df, aes(x = period, y = value, color = REF_AREA)) +
+#   geom_line(size = 0.5) 
+
+
+# BIS 
+
+df <- rdb(ids = c('BIS/cbpol/D.US',
+                  'BIS/cbpol/D.XM',
+                 # 'IMF/MFS/M.DE.FPOLM_PA',
+                  'BIS/cbpol/D.GB')) %>%
+  filter(!is.na(value))
+
+
+ggplot(df, aes(x = period, y = value, color = REF_AREA)) +
+  geom_line(size = 0.5) 
+
+
+```
+
+
+
+
 
 
 </details>
