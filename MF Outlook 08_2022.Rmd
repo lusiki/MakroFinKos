@@ -33,7 +33,8 @@ dat = WDI(indicator='FP.CPI.TOTL.ZG',
 ggplot(dat, aes(year, FP.CPI.TOTL.ZG, color=country)) +
   geom_line() + 
   xlab('Year') +
-  ylab('CPI %')
+  ylab('CPI %') + 
+  theme_bw()
 
 ```
 
@@ -96,7 +97,8 @@ df <- rdb(ids = c('IMF/CPI/M.US.PCPI_PC_CP_A_PT',
 
 
 ggplot(df, aes(x = period, y = value, color = REF_AREA)) +
-  geom_line(size = 0.5) 
+  geom_line(size = 0.5) + 
+  theme_bw() 
 
 
 ```
@@ -136,14 +138,11 @@ df <- rdb(ids = c('BIS/cbpol/D.US',
 
 
 ggplot(df, aes(x = period, y = value, color = REF_AREA)) +
-  geom_line(size = 0.5) 
+  geom_line(size = 0.5) + 
+  theme_bw()
 
 
 ```
-
-
-
-
 
 
 </details>
@@ -152,7 +151,38 @@ ggplot(df, aes(x = period, y = value, color = REF_AREA)) +
 <details>
  <summary>BDP dugoročno (razine)</summary>
 
-```{r}
+ 
+```{r , echo=FALSE, fig.height= 8, fig.width=10, warning=FALSE, message=FALSE}
+library(maddison)
+library(ggplot2)
+library(dplyr)
+library(scales)
+
+# Data frame with annotations
+df_annotate <- data.frame(
+  xmin = c(1914, 1939),
+  xmax = c(1918, 1945),
+  ymin = c(900, 900), ymax = c(3e4, 3e4),
+  label = c("WW1", "WW2"))
+
+maddison %>%
+  filter(iso2c %in% c("DE", "FR", "IT", "UK", "US")) %>%
+  filter(year >= 1800) %>%
+  ggplot() +
+  geom_rect(aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+            data = df_annotate, fill = "grey50", alpha = 0.25) +
+  geom_text(aes(label = label, x = xmin, y = ymax), data = df_annotate, 
+            vjust = 0, hjust = 0, nudge_y = 0.02, size = 3) +
+  geom_line(aes(x = year, y = rgdpnapc, color = country)) +
+  scale_y_log10(labels = comma, breaks = pretty_breaks(8)) +
+  theme_bw(8) +
+  labs(x = NULL, y = "GDP per capita (2011 US$)\n", color = NULL,
+       title = "GDP per capita (1800-2016)")
+
+```
+
+
+```{r ,echo=FALSE,  fig.width=12,warning=FALSE, message=FALSE}
 
 
 # dugoročne razine sa PEN world
@@ -166,7 +196,8 @@ df <- rdb(ids = c('OECD/MEI/USA.NAEXCP01.STSA.A',
 
 
 ggplot(df, aes(x = period, y = value, color = Country)) +
-  geom_line(size = 0.5) 
+  geom_line(size = 0.5) + 
+    theme_bw() 
 
 
 
@@ -181,7 +212,7 @@ ggplot(df, aes(x = period, y = value, color = Country)) +
  <summary>BDP dugoročno (stope promjene)</summary>
 
 
-```{r}
+```{r ,echo=FALSE,  fig.width=12,warning=FALSE, message=FALSE}
 
 
 df <- rdb(ids = c('OECD/MEI/USA.NAEXKP01.GYSA.Q',
@@ -192,7 +223,23 @@ df <- rdb(ids = c('OECD/MEI/USA.NAEXKP01.GYSA.Q',
 
 
 ggplot(df, aes(x = period, y = value, color = Country)) +
-  geom_line(size = 0.5) 
+  geom_line(size = 0.5) + 
+    theme_bw() 
+
+
+df <- rdb(ids = c('OECD/MEI/USA.NAEXKP01.GYSA.Q')) %>%
+  filter(!is.na(value))
+
+
+ggplot(df, aes(x = period, y = value)) +
+  geom_bar(stat = "identity") + 
+    theme_bw() + 
+    labs(x = "Observation Date", y = "Promjena %") +
+    ggtitle("Promjena BDP, kvartalno, SAD") + 
+    theme_bw()
+
+
+
 
 
 
@@ -204,12 +251,11 @@ df <- rdb(ids = c('OECD/MEI/USA.NAEXKP01.GYSA.A',
 
 
 ggplot(df, aes(x = period, y = value, color = Country)) +
-  geom_line(size = 0.5) 
+  geom_line(size = 0.5) + 
+    theme_bw() 
 
 
 ```
-
-
 
 
 
@@ -217,61 +263,25 @@ ggplot(df, aes(x = period, y = value, color = Country)) +
 
 
 <details>
- <summary>BDP dugoročno (recesije)</summary>
+ <summary>Vjerojatnost recesije u SAD</summary>
 
 
-```{r}
-
-
-```
-
-
-
-
-```{r}
-
+```{r,echo=FALSE,  fig.width=12,warning=FALSE, message=FALSE}
 library(fredr)
-
-fredr(
-  series_id = "JHDUSRGDPBR",
-  observation_start = as.Date("1940-01-01"),
-  observation_end = as.Date("2022-01-01")
-) %>%
-ggplot(data = ., mapping = aes(x = date, y = value, color = series_id)) +
-    geom_line() +
-    labs(x = "Observation Date", y = "Rate", color = "Series") +
-    ggtitle("Recesija u SAD")
-
-
-```
-
-
-
-```{r}
-
 fredr(
   series_id = "JHGDPBRINDX",
   observation_start = as.Date("1940-01-01"),
   observation_end = as.Date("2022-01-01")
 ) %>%
-ggplot(data = ., mapping = aes(x = date, y = value, color = series_id)) +
+ggplot(data = ., mapping = aes(x = date, y = value)) +
     geom_line() +
     labs(x = "Observation Date", y = "Rate", color = "Series") +
-    ggtitle("Vjerojatnost recesije u SAD")
+    ggtitle("Vjerojatnost recesije u SAD") + 
+    theme_bw()
 
 ```
 
 
-
-
-
-</details>
-
-<details>
- <summary>BDP kratkoročno</summary>
-
-
-<iframe src='https://d3fy651gv2fhd3.cloudfront.net/embed/?s=gdp+cqoq&v=202207281330V20220312&d1=20190821&h=300&w=600' height='300' width='600'  frameborder='0' scrolling='no'></iframe>
 
 </details>
 
@@ -279,19 +289,20 @@ ggplot(data = ., mapping = aes(x = date, y = value, color = series_id)) +
 <details>
  <summary>Nezaposlenost</summary>
 
-```{r}
+```{r,echo=FALSE,  fig.width=12,warning=FALSE, message=FALSE}
 
 
 fredr(
   series_id = "UNRATE",
   observation_start = as.Date("1940-01-01"),
   observation_end = as.Date("2022-01-01")
-) %>% # View()
+) %>% #View()
 ggplot(data = ., mapping = aes(x = date, y = value)) +
     geom_line() + 
     geom_rect( aes(xmin=realtime_start, xmax=realtime_end, ymin=-Inf, ymax=+Inf), fill='pink', alpha=0.2) +
     labs(x = "Observation Date", y = "Rate", color = "Series") +
-    ggtitle("Nezaposlenost u SAD")
+    ggtitle("Nezaposlenost u SAD") + 
+    theme_bw()
 
 ```
 
@@ -303,9 +314,70 @@ ggplot(data = ., mapping = aes(x = date, y = value)) +
  <summary>Nezaposlenost (+recesije)</summary>
 
 
-```{r , echo=FALSE, fig.cap="A caption", out.width = '100%'}
-knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/nezaposlenost1.png")
+```{r ,echo=FALSE,  fig.width=12,warning=FALSE, message=FALSE}
+recessions.df = read.table(textConnection(
+"Peak, Trough
+1857-06-01, 1858-12-01
+1860-10-01, 1861-06-01
+1865-04-01, 1867-12-01
+1869-06-01, 1870-12-01
+1873-10-01, 1879-03-01
+1882-03-01, 1885-05-01
+1887-03-01, 1888-04-01
+1890-07-01, 1891-05-01
+1893-01-01, 1894-06-01
+1895-12-01, 1897-06-01
+1899-06-01, 1900-12-01
+1902-09-01, 1904-08-01
+1907-05-01, 1908-06-01
+1910-01-01, 1912-01-01
+1913-01-01, 1914-12-01
+1918-08-01, 1919-03-01
+1920-01-01, 1921-07-01
+1923-05-01, 1924-07-01
+1926-10-01, 1927-11-01
+1929-08-01, 1933-03-01
+1937-05-01, 1938-06-01
+1945-02-01, 1945-10-01
+1948-11-01, 1949-10-01
+1953-07-01, 1954-05-01
+1957-08-01, 1958-04-01
+1960-04-01, 1961-02-01
+1969-12-01, 1970-11-01
+1973-11-01, 1975-03-01
+1980-01-01, 1980-07-01
+1981-07-01, 1982-11-01
+1990-07-01, 1991-03-01
+2001-03-01, 2001-11-01
+2007-12-01, 2009-06-01,
+2020-02-01, 2020-04-01"),
+sep=',',
+colClasses=c('Date', 'Date'),
+header=TRUE)
 ```
+
+
+```{r ,echo=FALSE,  fig.width=12,warning=FALSE, message=FALSE}
+unemploy <- fredr(
+  series_id = "UNRATE",
+  observation_start = as.Date("1940-01-01"),
+  observation_end = as.Date("2022-01-01")
+)
+
+
+recessions.trim = subset(recessions.df, Peak >= min(unemploy$date) )
+
+
+
+ggplot(unemploy) + 
+  geom_line(aes(x=date, y=value)) +
+  theme_bw() +
+  geom_rect(data=recessions.trim, aes(xmin=Peak, xmax=Trough, ymin=-Inf, ymax=+Inf), fill='red', alpha=0.2)
+
+
+```
+
+
 
 </details>
 
