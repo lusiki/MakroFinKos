@@ -109,8 +109,6 @@ ggplot(df, aes(x = period, y = value, color = REF_AREA)) +
  <summary>Kamatne stope CB</summary>
   
 
-
-
 ```{r, fig.width=10, echo=FALSE}
 # Monetary and Financial Statistics (MFS) [MFS]
 
@@ -154,8 +152,26 @@ ggplot(df, aes(x = period, y = value, color = REF_AREA)) +
 <details>
  <summary>BDP dugoročno (razine)</summary>
 
+```{r}
 
-<iframe src='https://d3fy651gv2fhd3.cloudfront.net/embed/?s=wgdpus&projection=te&v=202207111304V20220312&d1=19220914&h=300&w=600' height='300' width='600'  frameborder='0' scrolling='no'></iframe>
+
+# dugoročne razine sa PEN world
+
+
+df <- rdb(ids = c('OECD/MEI/USA.NAEXCP01.STSA.A',
+                  'OECD/MEI/EA19.NAEXCP01.STSA.A',
+                 # 'IMF/MFS/M.DE.FPOLM_PA',
+                  'OECD/MEI/GBR.NAEXCP01.STSA.A')) %>%
+  filter(!is.na(value))
+
+
+ggplot(df, aes(x = period, y = value, color = Country)) +
+  geom_line(size = 0.5) 
+
+
+
+
+```
 
 
 </details>
@@ -165,8 +181,36 @@ ggplot(df, aes(x = period, y = value, color = REF_AREA)) +
  <summary>BDP dugoročno (stope promjene)</summary>
 
 
+```{r}
 
-<iframe src='https://d3fy651gv2fhd3.cloudfront.net/embed/?s=gdp+cqoq&v=202207281330V20220312&d1=19220914&h=300&w=600' height='300' width='600'  frameborder='0' scrolling='no'></iframe>
+
+df <- rdb(ids = c('OECD/MEI/USA.NAEXKP01.GYSA.Q',
+                  'OECD/MEI/EA19.NAEXKP01.GYSA.Q',
+                 # 'IMF/MFS/M.DE.FPOLM_PA',
+                  'OECD/MEI/GBR.NAEXKP01.GYSA.Q')) %>%
+  filter(!is.na(value))
+
+
+ggplot(df, aes(x = period, y = value, color = Country)) +
+  geom_line(size = 0.5) 
+
+
+
+df <- rdb(ids = c('OECD/MEI/USA.NAEXKP01.GYSA.A',
+                  'OECD/MEI/EA19.NAEXKP01.GYSA.A',
+                 # 'IMF/MFS/M.DE.FPOLM_PA',
+                  'OECD/MEI/GBR.NAEXKP01.GYSA.A')) %>%
+  filter(!is.na(value))
+
+
+ggplot(df, aes(x = period, y = value, color = Country)) +
+  geom_line(size = 0.5) 
+
+
+```
+
+
+
 
 
 </details>
@@ -176,7 +220,50 @@ ggplot(df, aes(x = period, y = value, color = REF_AREA)) +
  <summary>BDP dugoročno (recesije)</summary>
 
 
-<iframe src='https://d3fy651gv2fhd3.cloudfront.net/embed/?s=usafygg&v=202201271524V20220312&d1=19970826&h=300&w=600' height='300' width='600'  frameborder='0' scrolling='no'></iframe>
+```{r}
+
+
+```
+
+
+
+
+```{r}
+
+library(fredr)
+
+fredr(
+  series_id = "JHDUSRGDPBR",
+  observation_start = as.Date("1940-01-01"),
+  observation_end = as.Date("2022-01-01")
+) %>%
+ggplot(data = ., mapping = aes(x = date, y = value, color = series_id)) +
+    geom_line() +
+    labs(x = "Observation Date", y = "Rate", color = "Series") +
+    ggtitle("Recesija u SAD")
+
+
+```
+
+
+
+```{r}
+
+fredr(
+  series_id = "JHGDPBRINDX",
+  observation_start = as.Date("1940-01-01"),
+  observation_end = as.Date("2022-01-01")
+) %>%
+ggplot(data = ., mapping = aes(x = date, y = value, color = series_id)) +
+    geom_line() +
+    labs(x = "Observation Date", y = "Rate", color = "Series") +
+    ggtitle("Vjerojatnost recesije u SAD")
+
+```
+
+
+
+
 
 </details>
 
@@ -192,8 +279,22 @@ ggplot(df, aes(x = period, y = value, color = REF_AREA)) +
 <details>
  <summary>Nezaposlenost</summary>
 
+```{r}
 
-<iframe src='https://d3fy651gv2fhd3.cloudfront.net/embed/?s=usurtot&v=202208051244V20220312&d1=19220914&h=300&w=600' height='300' width='600'  frameborder='0' scrolling='no'></iframe>
+
+fredr(
+  series_id = "UNRATE",
+  observation_start = as.Date("1940-01-01"),
+  observation_end = as.Date("2022-01-01")
+) %>% # View()
+ggplot(data = ., mapping = aes(x = date, y = value)) +
+    geom_line() + 
+    geom_rect( aes(xmin=realtime_start, xmax=realtime_end, ymin=-Inf, ymax=+Inf), fill='pink', alpha=0.2) +
+    labs(x = "Observation Date", y = "Rate", color = "Series") +
+    ggtitle("Nezaposlenost u SAD")
+
+```
+
 
 </details>
 
