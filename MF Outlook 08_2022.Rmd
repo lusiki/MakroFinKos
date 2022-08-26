@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE, warning=FALSE, message=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
 
@@ -385,90 +385,182 @@ ggplot(unemploy) +
 
 
 <details>
- <summary>Dionice (povijesno)</summary>
+ <summary>Dionice </summary>
+
+```{r ,  fig.width=10,warning=FALSE, message=FALSE}
+fredr(
+  series_id = "SP500",
+  observation_start = as.Date("2012-01-01"),
+  observation_end = Sys.Date()
+) %>%
+ggplot(data = ., mapping = aes(x = date, y = value)) +
+    geom_line() +
+    labs(x = "Observation Date", y = "Rate", color = "Series") +
+    ggtitle("SP500") + 
+    theme_bw()
+```
+
+```{r ,  fig.width=10,warning=FALSE, message=FALSE}
+fredr(
+  series_id = "DJIA",
+  observation_start = as.Date("2012-01-01"),
+  observation_end = Sys.Date()
+) %>%
+ggplot(data = ., mapping = aes(x = date, y = value)) +
+    geom_line() +
+    labs(x = "Observation Date", y = "Rate", color = "Series") +
+    ggtitle("Dow Jones Industrial") + 
+    theme_bw()
+```
+
+
+</details>
+
+
+
+
+<details>
+ <summary>Nafta </summary>
+
 
 ```{r , echo=FALSE, fig.cap="A caption", out.width = '100%'}
-knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/stocksLT.png")
+fredr(
+  series_id = "DCOILWTICO",
+  observation_start = as.Date("2012-01-01"),
+  observation_end = Sys.Date()
+) %>% 
+   drop_na() %>% 
+  filter( !value < 0 ) %>%
+  #View() %>%
+ggplot(data = ., mapping = aes(x = date, y = value)) +
+    geom_line() +
+    labs(x = "Observation Date", y = "US $", color = "Series") +
+    ggtitle("Cijena nafte US $") + 
+    theme_bw()
 ```
+
+</details>
+
+
+<details>
+ <summary>Obveznice (povijesno rok) </summary>
+
+```{r , echo=FALSE, fig.cap="A caption", out.width = '100%'}
+
+
+df <- rdb(ids = c('FED/H15/RIFLGFCY02_N.WF',
+                  'FED/H15/RIFLGFCY10_N.WF',
+                  'FED/H15/RIFLGFCY20_N.WF',
+                  'FED/H15/RIFLGFCY30_N.WF')) %>%
+  filter(!is.na(value))
+
+
+ggplot(df, aes(x = period, y = value, color = MATURITY)) +
+  geom_line(size = 0.5) + 
+    theme_bw() +
+    labs(x = "Observation Date", y = "Prinos %", color = "Series") +
+    ggtitle("Prinosi na američke državne obveznice (2,10,20,30 godina)") + 
+    theme_bw()
+
+
+```
+
+
+
+
 
 </details>
 
 
 
 <details>
- <summary>Dionice (25y)</summary>
-
-
-```{r , echo=FALSE, fig.cap="A caption", out.width = '100%'}
-knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/stocks25y.png")
-```
-
-</details>
-
-
-<details>
- <summary>Dionice (5y)</summary>
-
-
-```{r , echo=FALSE, fig.cap="A caption", out.width = '100%'}
-knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/stocks5y.png")
-```
-
-</details>
-
-<details>
- <summary>Dionice (1y)</summary>
-
-
-```{r , echo=FALSE, fig.cap="A caption", out.width = '100%'}
-knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/stocks1y.png")
-```
-
-</details>
-
-<details>
- <summary>Nafta (1y)</summary>
-
-
-```{r , echo=FALSE, fig.cap="A caption", out.width = '100%'}
-knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/oil.png")
-```
-
-</details>
-
-
-<details>
- <summary>Obveznice (10y;dugi rok) </summary>
+ <summary>Obveznice (dugi rok) </summary>
 
 
 ```{r , echo=FALSE,  out.width = '100%'}
-knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/bonds10.png")
+
+library(dplyr)
+df <- rdb(ids = c('FED/H15/RIFLGFCY02_N.WF',
+                  'FED/H15/RIFLGFCY10_N.WF',
+                  'FED/H15/RIFLGFCY20_N.WF',
+                  'FED/H15/RIFLGFCY30_N.WF')) %>%
+  dplyr::filter(!is.na(value)) %>%
+  dplyr::filter(period >= as.Date("2001-01-01"))
+
+
+
+ggplot(df, aes(x = period, y = value, color = MATURITY)) +
+  geom_line(size = 0.5) + 
+    theme_bw() +
+    labs(x = "Observation Date", y = "Prinos %", color = "Series") +
+    ggtitle("Prinosi na američke državne obveznice (2,10,20,30 godina)") + 
+    theme_bw()# + 
+    # xlim(as.Date(c('1/1/2011', '1/1/2013'), format="%d/%m/%Y") )
+
 ```
 
 </details>
-
 
 
 <details>
- <summary>Obveznice (10y;srednji rok) </summary>
+ <summary>Obveznice (srednji rok) </summary>
+
 
 
 ```{r , echo=FALSE,  out.width = '100%'}
-knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/bonds10st.png")
+
+df <- rdb(ids = c('FED/H15/RIFLGFCY02_N.WF',
+                  'FED/H15/RIFLGFCY10_N.WF',
+                  'FED/H15/RIFLGFCY20_N.WF',
+                  'FED/H15/RIFLGFCY30_N.WF')) %>%
+  dplyr::filter(!is.na(value)) %>%
+  dplyr::filter(period >= as.Date("2010-01-01"))
+
+
+
+ggplot(df, aes(x = period, y = value, color = MATURITY)) +
+  geom_line(size = 0.5) + 
+    theme_bw() +
+    labs(x = "Observation Date", y = "Prinos %", color = "Series") +
+    ggtitle("Prinosi na američke državne obveznice (2,10,20,30 godina)") + 
+    theme_bw()# + 
+    # xlim(as.Date(c('1/1/2011', '1/1/2013'), format="%d/%m/%Y") )
+
 ```
 
 </details>
 
 
 <details>
- <summary>Obveznice (1y;srednji rok) </summary>
+ <summary>Obveznice (kratki rok) </summary>
+
 
 
 ```{r , echo=FALSE,  out.width = '100%'}
-knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/bonds1.png")
+
+df <- rdb(ids = c('FED/H15/RIFLGFCY02_N.WF',
+                  'FED/H15/RIFLGFCY10_N.WF',
+                  'FED/H15/RIFLGFCY20_N.WF',
+                  'FED/H15/RIFLGFCY30_N.WF')) %>%
+  dplyr::filter(!is.na(value)) %>%
+  dplyr::filter(period >= as.Date("2020-01-01"))
+
+
+
+ggplot(df, aes(x = period, y = value, color = MATURITY)) +
+  geom_line(size = 0.5) + 
+    theme_bw() +
+    labs(x = "Observation Date", y = "Prinos %", color = "Series") +
+    ggtitle("Prinosi na američke državne obveznice (2,10,20,30 godina)") + 
+    theme_bw()# + 
+    # xlim(as.Date(c('1/1/2011', '1/1/2013'), format="%d/%m/%Y") )
+
 ```
 
+
 </details>
+
+
 
 
 <details>
