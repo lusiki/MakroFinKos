@@ -6,9 +6,22 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE, warning=FALSE, message=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE)
 ```
 
+
+```{r}
+library(WDI)
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+library(quantmod)
+library(Quandl)
+library(dplyr)
+library(IMFData)
+library(rdbnomics)
+library(fredr)
+```
 
 
 
@@ -19,10 +32,10 @@ knitr::opts_chunk$set(echo = FALSE)
   <summary>Inflacija</summary>
 
 
+
 ```{r,fig.width=12, echo=FALSE, warning=FALSE, message=FALSE}
-library(WDI)
-library(ggplot2)
-library(tidyverse)
+
+
 
 dat = WDI(indicator='FP.CPI.TOTL.ZG',
           country=c('FR','GB','US','DE','IT','ES'),
@@ -44,7 +57,7 @@ ggplot(dat, aes(year, FP.CPI.TOTL.ZG, color=country)) +
 # https://github.com/mingjerli/IMFData
 # also: https://meshry.com/blog/downloading-data-from-the-imf-api-using-r/
 
-library(IMFData)
+
  
 
 # search for data
@@ -267,7 +280,7 @@ ggplot(df, aes(x = period, y = value, color = Country)) +
 
 
 ```{r,echo=FALSE,  fig.width=12,warning=FALSE, message=FALSE}
-library(fredr)
+
 fredr(
   series_id = "JHGDPBRINDX",
   observation_start = as.Date("1940-01-01"),
@@ -414,6 +427,28 @@ ggplot(data = ., mapping = aes(x = date, y = value)) +
 ```
 
 
+
+
+```{r}
+
+
+
+getSymbols("^IXIC",src="yahoo")
+
+IXIC %>% 
+  zoo::fortify.zoo() %>%
+  ggplot(aes(x=Index,y=IXIC.Close)) +
+  labs(title = "Nasdaq Composite",
+       subtitle = "",
+       caption = " Source: Yahoo Finance") +
+  xlab("Date") + ylab("Index Value") +
+  geom_line()
+
+
+```
+
+
+
 </details>
 
 
@@ -479,7 +514,7 @@ ggplot(df, aes(x = period, y = value, color = MATURITY)) +
 
 ```{r , echo=FALSE,  out.width = '100%'}
 
-library(dplyr)
+
 df <- rdb(ids = c('FED/H15/RIFLGFCY02_N.WF',
                   'FED/H15/RIFLGFCY10_N.WF',
                   'FED/H15/RIFLGFCY20_N.WF',
@@ -594,7 +629,24 @@ knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/bondspread.p
 
 
 ```{r , echo=FALSE,  out.width = '100%'}
-knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/TLT20.png")
+
+
+
+
+
+
+getSymbols("TLT",src="yahoo")
+
+TLT %>% 
+  zoo::fortify.zoo() %>%
+  ggplot(aes(x=Index,y=TLT.Close)) +
+  labs(title = "TLT",
+       subtitle = "Close Price",
+       caption = " Source: Yahoo Finance") +
+  xlab("Date") + ylab("Price") +
+  geom_line()+ 
+    theme_bw()
+
 ```
 
 </details>
@@ -604,64 +656,47 @@ knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/TLT20.png")
  <summary>Crypto </summary>
 
 
-```{r , echo=FALSE,  out.width = '100%'}
-knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/BTC.png")
+```{r}
+
+getSymbols("BTC-USD",src="yahoo")
+  
+`BTC-USD` %>%  
+  zoo::fortify.zoo() %>%
+  ggplot(aes(x=Index, y= `BTC-USD.Close`)) +
+  labs(title = "Bitcoin US $",
+       subtitle = "Close Price",
+       caption = " Source: Yahoo Finance") +
+  xlab("Date") + ylab("US $") +
+  geom_line()+ 
+    theme_bw()
+
 ```
+
+
 
 </details>
 
 
-<details>
- <summary>Crypto </summary>
-
-
-```{r , echo=FALSE,  out.width = '100%'}
-knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/NASDAQ.png")
-```
-
-</details>
-
-
-<details>
- <summary>Fondovi (energija + obvezince) </summary>
-
-
-```{r , echo=FALSE,  out.width = '100%'}
-knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/Inkedfondovi.jpg")
-```
-
-</details>
-
-
-<details>
- <summary>FED i tržišta </summary>
-
-
-```{r , echo=FALSE,  out.width = '100%'}
-knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/InkedFED.jpg")
-```
-
-</details>
-
-
-
-<details>
- <summary>Duljina pada na dioničkom tržištu </summary>
-
-
-```{r , echo=FALSE,  out.width = '100%'}
-knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/Inkedstockrecesije.jpg")
-```
-
-</details>
 
 <details>
  <summary>SP500 zarade </summary>
 
 
-```{r , echo=FALSE,  out.width = '100%'}
-knitr::include_graphics("C:/Users/Lukas/OneDrive/Desktop/MFOverview/Inkedspzarade.jpg")
+```{r}
+PESP500 = Quandl("MULTPL/SP500_PE_RATIO_MONTH")
+
+
+PESP500 %>%
+  ggplot(aes(x=Date, y= Value)) +
+  labs(title = "S&P 500 PE Ratio",
+       subtitle = "Mjesečno",
+       caption = " Source: Robert Shiller") +
+  xlab("Date") + ylab("PE omjer") +
+  geom_line()+ 
+    theme_bw()
+
 ```
+
 
 </details>
 
